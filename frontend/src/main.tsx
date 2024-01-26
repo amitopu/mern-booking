@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import AppContextProvider from "./Contexts/AppContext.tsx";
 
 const client = new QueryClient({
     defaultOptions: {
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <BrowserRouter>
             <QueryClientProvider client={client}>
-                <App />
+                <AppContextProvider>
+                    <App />
+                </AppContextProvider>
             </QueryClientProvider>
         </BrowserRouter>
     </React.StrictMode>
