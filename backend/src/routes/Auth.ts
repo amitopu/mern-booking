@@ -50,7 +50,9 @@ router.post(
                 maxAge: 86400000,
             });
 
-            return res.status(200).json({ message: "Login successful" });
+            return res
+                .status(200)
+                .json({ userId: user._id, message: "Login successful" });
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: "something went wrong" });
