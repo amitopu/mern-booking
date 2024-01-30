@@ -17,6 +17,8 @@ export const register = async (formData: RegisterFormData) => {
     if (!response.ok) {
         throw new Error(responseBody.message);
     }
+
+    return responseBody;
 };
 
 export const validateToken = async () => {
@@ -48,4 +50,15 @@ export const signIn = async (signIndata: SignInFormData) => {
     }
 
     return responseData;
+};
+
+export const logOut = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to logout");
+    }
 };

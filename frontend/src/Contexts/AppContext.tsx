@@ -6,7 +6,6 @@ import * as apiClient from "../Apis/api-client";
 type ToastMessage = {
     message: string;
     type: "SUCCESS" | "ERROR";
-    path: string;
 };
 
 type AppContext = {
@@ -35,7 +34,6 @@ const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
                 <Toast
                     message={toast.message}
                     type={toast.type}
-                    path={toast.path}
                     onClose={() => {
                         setToast(undefined);
                     }}

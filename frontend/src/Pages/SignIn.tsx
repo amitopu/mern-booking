@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../Apis/api-client";
 import { useAppContext } from "../Contexts/AppContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export type SignInFormData = {
     email: string;
@@ -10,28 +11,28 @@ export type SignInFormData = {
 
 const SignIn = () => {
     const { showToast } = useAppContext();
+    const queryClient = useQueryClient();
 
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm<SignInFormData>();
-
-    const mutation = useMutation({
-        mutationFn: apiClient.signIn,
+    const navigate = useNavigate();
+    const mutation = useMutation(apiClient.signIn, {
         onSuccess: async () => {
             showToast({
-                message: "Sign in successful. Redirecting...",
+                message: "Sign in successful",
                 type: "SUCCESS",
-                path: "/",
             });
+            await queryClient.invalidateQueries("validateToken");
+            navigate("/");
         },
 
-        onError: () => {
+        onError: (error: Error) => {
             showToast({
-                message: "Sign In failed. Try again later",
+                message: error.message,
                 type: "ERROR",
-                path: "",
             });
         },
     });
@@ -81,7 +82,16 @@ const SignIn = () => {
                         </span>
                     )}
                 </label>
-                <span>
+                <span className="flex justify-between items-center">
+                    <span className="text-sm">
+                        Not registered?{" "}
+                        <Link
+                            className="hover:font-bold hover:text-blue-200"
+                            to="/register"
+                        >
+                            Create an account
+                        </Link>
+                    </span>
                     <button
                         type="submit"
                         className="bg-blue-600 text-white font-bold text-xl rounded-md p-2 hover:bg-blue-500"
