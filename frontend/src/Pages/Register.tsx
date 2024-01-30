@@ -30,9 +30,9 @@ const Register = () => {
             });
         },
 
-        onError: async (error: Error) => {
+        onError: (error: Error) => {
             showToast({
-                message: await error.message,
+                message: error.message,
                 type: "ERROR",
                 path: "",
             });
