@@ -1,3 +1,4 @@
+import { SignInFormData } from "./../Pages/SignIn";
 import { RegisterFormData } from "../Pages/Register";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,9 +24,28 @@ export const validateToken = async () => {
         credentials: "include",
     });
 
+    const responseData = await response.json();
     if (!response.ok) {
         throw new Error("You Are Not Authorized");
     }
 
-    return response.json();
+    return responseData;
+};
+
+export const signIn = async (signIndata: SignInFormData) => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/signin`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-type": "Application/json",
+        },
+        body: JSON.stringify(signIndata),
+    });
+
+    const responseData = await response.json();
+    if (!response.ok) {
+        throw new Error(responseData.message);
+    }
+
+    return responseData;
 };

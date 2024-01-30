@@ -1,21 +1,28 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ToastProps = {
     message: string;
     type: "SUCCESS" | "ERROR";
+    path: string;
     onClose: () => void;
 };
 
-const Toast = ({ message, type, onClose }: ToastProps) => {
+const Toast = ({ message, type, path, onClose }: ToastProps) => {
+    const navigate = useNavigate();
     useEffect(() => {
         const timer = setTimeout(() => {
+            if (path !== "") {
+                navigate(path);
+            }
+
             onClose();
         }, 5000);
 
         return () => {
             clearTimeout(timer);
         };
-    }, [onClose]);
+    }, [onClose, path, navigate]);
 
     const style =
         type === "SUCCESS"
