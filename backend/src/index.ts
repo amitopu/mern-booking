@@ -4,13 +4,21 @@ import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./routes/User";
 import authRouter from "./routes/Auth";
+import cookieParser from "cookie-parser";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+    })
+);
+// app.use(cors());
 const port = 7000;
 
 // app.get('/api/test', async (req: Request, res:Response) =>{

@@ -3,6 +3,7 @@ import Express, { Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
+import verifyToken from "../middleware/auth";
 
 const router = Express.Router();
 
@@ -59,5 +60,9 @@ router.post(
         }
     }
 );
+
+router.get("/verifytoken", verifyToken, (req: Request, res: Response) => {
+    return res.status(200).send({ userId: req.userId });
+});
 
 export default router;
