@@ -23,7 +23,7 @@ const Header = () => {
                                 to="/my-hotels"
                                 className="flex text-blue-500 hover:bg-blue-400 hover:text-blue-300 px-3 font-bold items-center"
                             >
-                                My-Hotels
+                                My Hotels
                             </Link>
                             <SignOutButton></SignOutButton>
                         </>
