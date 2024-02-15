@@ -6,6 +6,7 @@ import userRouter from "./routes/User";
 import authRouter from "./routes/Auth";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
+import hotelRouter from "./routes/MyHotels";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,6 +40,7 @@ const port = 7000;
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/newhotel", hotelRouter);
 
 app.listen(port, () => {
     console.log(`Server is listening to port ${port}`);
